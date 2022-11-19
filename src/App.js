@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyle from "./assets/styles/GlobalStyle.js"
+import Login from "./Login"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Registration from "./Registration.js"
+import BankingMovements from "./BankingMovements.js"
+import { useState } from "react"
+import Outflow from "./Outflow.js"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+  const [token, setToken] = useState("")
+  const [name, setName] = useState("")
+  return (<>
+  <BrowserRouter>
+      <GlobalStyle />
+      <Routes>
+          <Route path="/" element={<Login token={token} setToken={setToken}/>} />
+          <Route path="/cadastrar" element={<Registration  name={name} setName={setName} />} />
+          <Route path="/movimentos" element={<BankingMovements token={token} setToken={setToken}  name={name}/>}/>
+          <Route path="/gastos" element={<Outflow/>}/> 
+          <Route path="/ganhos" element={<Deposit/>}/> 
+      </Routes>
+  </BrowserRouter>
+  </>
+  )
 }
 
-export default App;
+
