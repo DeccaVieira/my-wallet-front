@@ -1,9 +1,18 @@
+import axios from "axios";
 import styled from "styled-components";
 
 export default function BankingMovements(props) {
   const { token, setToken, name } = props;
   console.log(token);
   console.log(name);
+const URL = "http://localhost:5000/registers";
+const config = {
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+}
+const promise = axios.get(URL, config)
+
   return (
     <StyleBankingMovements>
       <h2>Olá, {name}</h2>

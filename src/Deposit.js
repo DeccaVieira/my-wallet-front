@@ -2,38 +2,35 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
 
-export default function Outflow() {
-  const [valueOutFlow, setValueOutFlow] = useState({
-    value: Number,
-    description: "",
+
+export default function Deposit() {
+    const [valueDeposit, setValueDeposit] = useState({value:Number, description:""})
+
+    function handleForm(e) {
+        setValueDeposit({...setValueDeposit,  [e.target.name]: e.target.value });
+      }
+      function Deposit(Event) {
+        Event.preventDefault();
+      }
+   function addDeposit(){ 
+const URL = "http://localhost:5000/registers"
+
+    const request = axios.post(URL, valueDeposit)
+    request.then((res)=> {
+   console.log(res.data);
+   setValueDeposit(res.data);
+})
+request.catch((err) => {
+    alert(err.response.data.message);
   });
-
-  function handleForm(e) {
-    setValueOutFlow({ ...valueOutFlow, [e.target.name]: e.target.value });
-  }
-  function OutFlow(Event) {
-    Event.preventDefault();
-  }
-  function addOutFlow() {
-    const URL = "http://localhost:5000/registers";
-
-    const request = axios.post(URL, { ...valueOutFlow, type: "outflow" });
-    request.then((res) => {
-      console.log(request);
-      setValueOutFlow(res.data);
-    });
-    request.catch((err) => {
-      alert(err.response.data.message);
-    });
-  }
-  return (
-    <StyleBankingMovements>
-      <h2>Nova saída</h2>
-      <StyleForm>
-        <form onSubmit={OutFlow}>
-          <input
+}
+    return(<StyleBankingMovements>
+    <h2>Nova saída</h2>
+    <StyleForm>
+    <form onSubmit={Deposit}>
+    <input
             name="value"
-            value={valueOutFlow.value}
+            value={valueDeposit.value}
             onChange={handleForm}
             type="text"
             placeholder="Valor"
@@ -41,19 +38,17 @@ export default function Outflow() {
           />
           <input
             name="description"
-            value={valueOutFlow.description}
+            value={valueDeposit.description}
             onChange={handleForm}
             type="text"
             placeholder="Descrição"
             required
           />
-          <button onClick={addOutFlow} type="submit">
-            <h2>Salvar saída</h2>
-          </button>{" "}
-        </form>
-      </StyleForm>
-    </StyleBankingMovements>
-  );
+           <button onClick={addDeposit} type="submit">
+            <h2>Salvar entrada</h2>
+          </button> </form>
+    </StyleForm>
+    </StyleBankingMovements>)
 }
 const StyleBankingMovements = styled.main`
   width: 375px;
@@ -72,7 +67,7 @@ const StyleBankingMovements = styled.main`
     text-align: left;
     color: #ffffff;
   }
-`;
+`
 const StyleForm = styled.div`
 width: 303px;
 heigth: 147px;
@@ -96,4 +91,4 @@ button{
     background-color:#BA55D3;
     border-radius: 4.64px;
     border:none;
-   }`;
+   }`
