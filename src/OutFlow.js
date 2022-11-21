@@ -9,7 +9,7 @@ export default function Outflow() {
   });
 
   function handleForm(e) {
-    setValueOutFlow({ ...setValueOutFlow, [e.target.name]: e.target.value });
+    setValueOutFlow({ ...valueOutFlow, [e.target.name]: e.target.value });
   }
   function OutFlow(Event) {
     Event.preventDefault();

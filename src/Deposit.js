@@ -7,7 +7,7 @@ export default function Deposit() {
     const [valueDeposit, setValueDeposit] = useState({value:"", description:""})
 
     function handleForm(e) {
-        setValueDeposit({...setValueDeposit,  [e.target.name]: e.target.value });
+        setValueDeposit({...valueDeposit,  [e.target.name]: e.target.value });
       }
       function Deposit(Event) {
         Event.preventDefault();

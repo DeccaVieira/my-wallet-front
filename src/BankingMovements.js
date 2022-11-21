@@ -42,7 +42,9 @@ return (
       {info.map((d) => 
         
         <Stylevalue key={d.id} >
-           <h3>{d.description}</h3> <h3>{d.value}</h3>
+            <h3>{d.day}</h3> 
+           <h3>{d.description}</h3> 
+           <h3>{d.value}</h3>
         </Stylevalue>
         )}
 
