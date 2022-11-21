@@ -72,7 +72,7 @@ export default function Login(props) {
 const StyleLogin = styled.main`
   width: 375px;
   height: 667px;
-  background-color: purple;
+  background-color: #8C11BE;
   display: flex;
   flex-direction: column;
 
