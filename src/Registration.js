@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Registration(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { name, setName } = props;
+  const [ name, setName ] = useState("");
   const [validatePass, setValidatePass] = useState("");
   const navigate = useNavigate();
 
@@ -81,7 +81,7 @@ export default function Registration(props) {
 const StyleRegistration = styled.main`
   width: 375px;
   height: 667px;
-  background-color: purple;
+  background-color: #8C11BE;
   display: flex;
   flex-direction: column;
 

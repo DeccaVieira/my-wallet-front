@@ -6,9 +6,9 @@ import react, { useState } from "react";
 
 export default function Login(props) {
   const [form, setForm] = useState({ email: "", password: "" });
-  const { token, setToken } = props;
+  const { token, setToken, setName } = props;
   const navigate = useNavigate();
-
+ 
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
@@ -23,10 +23,9 @@ export default function Login(props) {
 
     const promise = axios.post(URL, form);
     promise.then((res) => {
-      setToken(res.data);
-    
-      
-     
+      setToken(res.data.token);
+      setName(res.data.name);
+      console.log(res.data)
       navigate("/movimentos");
     });
 

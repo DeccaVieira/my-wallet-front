@@ -13,8 +13,8 @@ export default function App() {
   <BrowserRouter>
       <GlobalStyle />
       <Routes>
-          <Route path="/" element={<Login token={token} setToken={setToken}/>} />
-          <Route path="/cadastrar" element={<Registration  name={name} setName={setName} />} />
+          <Route path="/" element={<Login token={token} setToken={setToken} name={name} setName={setName} />} />
+          <Route path="/cadastrar" element={<Registration  />} />
           <Route path="/movimentos" element={<BankingMovements token={token} setToken={setToken}  name={name}/>}/>
           <Route path="/gastos" element={<OutFlow token={token} setToken={setToken}/>}/> 
           <Route path="/ganhos" element={<Deposit token={token} setToken={setToken}/>}/>

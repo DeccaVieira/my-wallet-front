@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect  } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Outflow() {
-  const [valueOutFlow, setValueOutFlow] = useState({
+export default function Outflow(props) {
+  const { token, setToken } = props;
+    const [valueOutFlow, setValueOutFlow] = useState({
     value: "",
-    description: ""
+    description: "",
   });
-
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(token ===""){
+      navigate("/")
+    }
+  },[])
   function handleForm(e) {
     setValueOutFlow({ ...valueOutFlow, [e.target.name]: e.target.value });
   }
@@ -15,27 +23,36 @@ export default function Outflow() {
     Event.preventDefault();
   }
   function addOutFlow(props) {
-    const {token} = props;
-const URL = "http://localhost:5000/registers"
-const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
+    const { token } = props;
+    const URL = "http://localhost:5000/registers";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-    const request = axios.post(URL, { ...valueOutFlow, type: "outflow" },config)
-    request.then((res)=> {
-   console.log(res.data);
-   setValueOutFlow(res.data);
-})
-request.catch((err) => {
-    alert(err.response.data.message);
-  });
+    const request = axios.post(
+      URL,
+      { ...valueOutFlow, type: "outflow" },
+      config
+    );
+    request.then((res) => {
+      console.log(res.data.value, "Value Vendas");
+
+      setValueOutFlow(res.data);
+      navigate("/movimentos");
+    });
+    request.catch((err) => {
+      alert(err.response.data.message);
+    });
   }
   return (
     <StyleBankingMovements>
-        <StyleHeader>
-      <h2>Nova saída</h2>
+      <StyleHeader>
+        <h3>Nova saída</h3>
+        <Link to="/movimentos">
+          <ion-icon name="return-up-back-outline"></ion-icon>
+        </Link>
       </StyleHeader>
       <StyleForm>
         <form onSubmit={OutFlow}>
@@ -43,7 +60,7 @@ request.catch((err) => {
             name="value"
             value={valueOutFlow.value}
             onChange={handleForm}
-            type="text"
+            type="number"
             placeholder="Valor"
             required
           />
@@ -56,8 +73,8 @@ request.catch((err) => {
             required
           />
           <button onClick={addOutFlow} type="submit">
-            <h2>Salvar saída</h2>
-          </button>{" "}
+            <h3>Salvar saída</h3>
+          </button>
         </form>
       </StyleForm>
     </StyleBankingMovements>
@@ -66,18 +83,14 @@ request.catch((err) => {
 const StyleBankingMovements = styled.main`
   width: 375px;
   height: 667px;
-  background-color: purple;
+  background-color: #8C11BE;
   display: flex;
   flex-direction: column;
 
   h2 {
-    margin: 95px 180px 24px 113px;
     font-family: Saira Stencil One;
     font-size: 32px;
     font-weight: 400;
-    line-height: 50px;
-    letter-spacing: 0em;
-    text-align: left;
     color: #ffffff;
   }
 `;
@@ -85,6 +98,7 @@ const StyleForm = styled.div`
 width: 303px;
 heigth: 147px;
 display:flex;
+margin-top:40px;
 justify-content:center;
 margin-left:36px;
 flex-direction:column;
@@ -105,18 +119,26 @@ button{
     border-radius: 4.64px;
     border:none;
    }`;
-   const StyleHeader = styled.div`
- 
-   width: 326px;
-   height: 78px;
-   display: flex;
-   justify-content: space-between;
-   margin: 24px;
-   z-index: 1;
-   h2 {
-     font-family: Saira Stencil One;
-     font-size: 32px;
-     font-weight: 400;
-     color: #ffffff;
-   }
- `;
+
+const StyleHeader = styled.div`
+  width: 375px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ion-icon {
+    font-size: 35px;
+    color: #ffffff;
+    margin-right: 20px;
+  }
+  h3 {
+    font-family: Raleway;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 31px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+    margin: 24px;
+  }
+`;
