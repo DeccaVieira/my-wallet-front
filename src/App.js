@@ -16,8 +16,8 @@ export default function App() {
           <Route path="/" element={<Login token={token} setToken={setToken}/>} />
           <Route path="/cadastrar" element={<Registration  name={name} setName={setName} />} />
           <Route path="/movimentos" element={<BankingMovements token={token} setToken={setToken}  name={name}/>}/>
-          <Route path="/gastos" element={<OutFlow/>}/> 
-          <Route path="/ganhos" element={<Deposit/>}/>
+          <Route path="/gastos" element={<OutFlow token={token} setToken={setToken}/>}/> 
+          <Route path="/ganhos" element={<Deposit token={token} setToken={setToken}/>}/>
       </Routes>
   </BrowserRouter>
   </>

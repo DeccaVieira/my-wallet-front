@@ -4,7 +4,7 @@ import { useState } from "react";
 
 
 export default function Deposit() {
-    const [valueDeposit, setValueDeposit] = useState({value:Number, description:""})
+    const [valueDeposit, setValueDeposit] = useState({value:"", description:""})
 
     function handleForm(e) {
         setValueDeposit({...setValueDeposit,  [e.target.name]: e.target.value });
@@ -12,10 +12,16 @@ export default function Deposit() {
       function Deposit(Event) {
         Event.preventDefault();
       }
-   function addDeposit(){ 
+   function addDeposit(props){ 
+    const {token} = props;
 const URL = "http://localhost:5000/registers"
+const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-    const request = axios.post(URL, valueDeposit)
+    const request = axios.post(URL, { ...valueDeposit, type: "deposit" },config)
     request.then((res)=> {
    console.log(res.data);
    setValueDeposit(res.data);
@@ -25,7 +31,10 @@ request.catch((err) => {
   });
 }
     return(<StyleBankingMovements>
-    <h2>Nova saída</h2>
+        <StyleHeader>
+    <h2>Nova entrada</h2>
+        </StyleHeader>
+        
     <StyleForm>
     <form onSubmit={Deposit}>
     <input
@@ -62,9 +71,6 @@ const StyleBankingMovements = styled.main`
     font-family: Saira Stencil One;
     font-size: 32px;
     font-weight: 400;
-    line-height: 50px;
-    letter-spacing: 0em;
-    text-align: left;
     color: #ffffff;
   }
 `
@@ -92,3 +98,19 @@ button{
     border-radius: 4.64px;
     border:none;
    }`
+
+   const StyleHeader = styled.div`
+
+  width: 326px;
+  height: 78px;
+  display: flex;
+  justify-content: space-between;
+ 
+
+  h2 {
+    font-family: Saira Stencil One;
+    font-size: 32px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+`;

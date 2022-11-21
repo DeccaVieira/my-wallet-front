@@ -4,31 +4,39 @@ import { useState } from "react";
 
 export default function Outflow() {
   const [valueOutFlow, setValueOutFlow] = useState({
-    value: Number,
-    description: "",
+    value: "",
+    description: ""
   });
 
   function handleForm(e) {
-    setValueOutFlow({ ...valueOutFlow, [e.target.name]: e.target.value });
+    setValueOutFlow({ ...setValueOutFlow, [e.target.name]: e.target.value });
   }
   function OutFlow(Event) {
     Event.preventDefault();
   }
-  function addOutFlow() {
-    const URL = "http://localhost:5000/registers";
+  function addOutFlow(props) {
+    const {token} = props;
+const URL = "http://localhost:5000/registers"
+const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-    const request = axios.post(URL, { ...valueOutFlow, type: "outflow" });
-    request.then((res) => {
-      console.log(request);
-      setValueOutFlow(res.data);
-    });
-    request.catch((err) => {
-      alert(err.response.data.message);
-    });
+    const request = axios.post(URL, { ...valueOutFlow, type: "outflow" },config)
+    request.then((res)=> {
+   console.log(res.data);
+   setValueOutFlow(res.data);
+})
+request.catch((err) => {
+    alert(err.response.data.message);
+  });
   }
   return (
     <StyleBankingMovements>
+        <StyleHeader>
       <h2>Nova saída</h2>
+      </StyleHeader>
       <StyleForm>
         <form onSubmit={OutFlow}>
           <input
@@ -97,3 +105,18 @@ button{
     border-radius: 4.64px;
     border:none;
    }`;
+   const StyleHeader = styled.div`
+ 
+   width: 326px;
+   height: 78px;
+   display: flex;
+   justify-content: space-between;
+   margin: 24px;
+   z-index: 1;
+   h2 {
+     font-family: Saira Stencil One;
+     font-size: 32px;
+     font-weight: 400;
+     color: #ffffff;
+   }
+ `;
