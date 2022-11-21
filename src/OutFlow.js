@@ -22,8 +22,8 @@ export default function Outflow(props) {
   function OutFlow(Event) {
     Event.preventDefault();
   }
-  function addOutFlow(props) {
-    const { token } = props;
+  function addOutFlow() {
+ 
     const URL = "http://localhost:5000/registers";
     const config = {
       headers: {
@@ -37,13 +37,12 @@ export default function Outflow(props) {
       config
     );
     request.then((res) => {
-      console.log(res.data.value, "Value Vendas");
-
+     
       setValueOutFlow(res.data);
       navigate("/movimentos");
     });
     request.catch((err) => {
-      alert(err.response.data.message);
+      console.log(err);
     });
   }
   return (

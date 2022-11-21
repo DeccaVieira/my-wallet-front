@@ -1,22 +1,22 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect  } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function Deposit(props) {
   const { token, setToken } = props;
-  
+
   const [valueDeposit, setValueDeposit] = useState({
     value: "",
     description: "",
   });
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(token ===""){
-      navigate("/")
+  useEffect(() => {
+    if (token === "") {
+      navigate("/");
     }
-  },[])
+  }, []);
   function handleForm(e) {
     setValueDeposit({ ...valueDeposit, [e.target.name]: e.target.value });
   }
@@ -30,21 +30,18 @@ export default function Deposit(props) {
         Authorization: `Bearer ${token}`,
       },
     };
-console.log(token);
+
     const request = axios.post(
       URL,
       { ...valueDeposit, type: "deposit" },
       config
     );
     request.then((res) => {
-      console.log(res.data);
       setValueDeposit(res.data);
       navigate("/movimentos");
-
     });
     request.catch((err) => {
-
-    console.log(err);
+      console.log(err);
     });
   }
   return (
@@ -75,7 +72,7 @@ console.log(token);
             required
           />
           <button onClick={addDeposit} type="submit">
-            <h3>Salvar entrada</h3> 
+            <h3>Salvar entrada</h3>
           </button>
         </form>
       </StyleForm>
@@ -85,7 +82,7 @@ console.log(token);
 const StyleBankingMovements = styled.main`
   width: 375px;
   height: 667px;
-  background-color: #8C11BE;
+  background-color: #8c11be;
   display: flex;
   flex-direction: column;
 

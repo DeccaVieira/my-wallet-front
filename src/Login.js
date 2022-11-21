@@ -8,24 +8,22 @@ export default function Login(props) {
   const [form, setForm] = useState({ email: "", password: "" });
   const { token, setToken, setName } = props;
   const navigate = useNavigate();
- 
+
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  console.log(form);
   function loginApp(Event) {
     Event.preventDefault();
   }
 
   function login() {
-
     const URL = "http://localhost:5000/sign-in";
 
     const promise = axios.post(URL, form);
     promise.then((res) => {
       setToken(res.data.token);
       setName(res.data.name);
-      console.log(res.data)
+
       navigate("/movimentos");
     });
 
@@ -71,7 +69,7 @@ export default function Login(props) {
 const StyleLogin = styled.main`
   width: 375px;
   height: 667px;
-  background-color: #8C11BE;
+  background-color: #8c11be;
   display: flex;
   flex-direction: column;
 

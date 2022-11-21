@@ -11,13 +11,7 @@ export default function BankingMovements(props) {
   const [amount, setAmount] = useState("");
   const navigate = useNavigate();
 
-  if (infoReverse.length > 0) {
-    calculateAmount();
-  }
-
   useEffect(() => {
-
-    
     if (token === "") {
       navigate("/");
     }
@@ -32,35 +26,30 @@ export default function BankingMovements(props) {
     };
 
     const promise = axios.get(URL, config);
-  (async ()=>{
+
     promise.then((res) => {
-    console.log("a")
-    setInfo(res.data);
-    setInfoReverse([...info.reverse()]);
-  });
-  promise.catch((err) => {
-    console.log(err.response.data);
-  });
-  
-})();
-console.log("b")
+      setInfo(res.data);
+      setInfoReverse([...res.data.reverse()]);
+    });
+    promise.catch((err) => {
+      console.log(err.response.data);
+    });
   }, []);
 
   function calculateAmount() {
     let soma = 0;
     info.forEach(({ value, type }) => {
-      console.log(value, typeof(value))
+      const valueNumber = Number(value.replace(",", "."));
       if (type === "deposit") {
-        soma += +value * 100;
+        soma += valueNumber * 100;
       } else {
-        soma -= +value * 100;
+        soma -= valueNumber * 100;
       }
     });
-    setAmount((soma / 100).toFixed(2));
-    console.log(soma, "soma");
+
+    return (soma / 100).toFixed(2);
   }
 
-  console.log(amount);
   return (
     <StyleBankingMovements>
       <StyleHeader>
@@ -93,9 +82,9 @@ console.log("b")
         <h1>Saldo</h1>
 
         {amount < 0 ? (
-          <StyleValueOutflow>{amount}</StyleValueOutflow>
+          <StyleValueOutflow>{calculateAmount()}</StyleValueOutflow>
         ) : (
-          <StyleValueDeposit>{amount}</StyleValueDeposit>
+          <StyleValueDeposit>{calculateAmount()}</StyleValueDeposit>
         )}
       </StyleAmount>
 
@@ -157,7 +146,6 @@ const StyleMovement = styled.div`
   height: 446px;
   width: 326px;
   margin-left: 25px;
-  margin-top: 78px;
   border-radius: 3px;
   background-color: #ffffff;
   overflow-y: scroll;
@@ -185,7 +173,7 @@ const Options = styled.div`
   height: 130px;
   width: 375px;
   display: flex;
-  background-color: purple;
+  background-color: #8c11be;
   justify-content: space-around;
 `;
 const Stylevalue = styled.div`
